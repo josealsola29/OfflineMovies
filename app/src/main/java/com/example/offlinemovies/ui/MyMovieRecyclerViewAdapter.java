@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.offlinemovies.R;
-import com.example.offlinemovies.data.MovieEntity;
+import com.example.offlinemovies.data.local.entity.MovieEntity;
+import com.example.offlinemovies.data.remote.ApiConstants;
 
 import java.util.List;
 
@@ -36,6 +36,9 @@ public class MyMovieRecyclerViewAdapter extends RecyclerView.Adapter<MyMovieRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
+        Glide.with(ctx)
+                .load(ApiConstants.IMAGE_API_PREFIX + holder.mItem.getPosterPath())
+                .into(holder.imageViewCover);
 
     }
 
