@@ -11,5 +11,4 @@ public abstract class MovieRoomDatabase extends RoomDatabase {
 
 
     public abstract MovieDAO getmovieDAO();
-
 }

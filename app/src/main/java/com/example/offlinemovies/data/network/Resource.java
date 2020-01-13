@@ -10,6 +10,7 @@ import static com.example.offlinemovies.data.network.Status.SUCCESS;
 
 /**
  * A generic class that holds a value with its loading status.
+ *
  * @param <T>
  */
 public class Resource<T> {
@@ -17,7 +18,9 @@ public class Resource<T> {
     public final Status status;
     @Nullable
     public final T data;
-    @Nullable public final String message;
+    @Nullable
+    public final String message;
+
     private Resource(@NonNull Status status, @Nullable T data, @Nullable String message) {
         this.status = status;
         this.data = data;

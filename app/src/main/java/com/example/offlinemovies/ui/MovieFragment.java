@@ -7,12 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.offlinemovies.R;
 import com.example.offlinemovies.data.local.entity.MovieEntity;
+import com.example.offlinemovies.data.network.Resource;
+import com.example.offlinemovies.viewmodel.MovieViewModel;
 
 import java.util.List;
 
@@ -22,6 +26,7 @@ public class MovieFragment extends Fragment {
     private int mColumnCount = 1;
     List<MovieEntity> movieEntityList;
     MyMovieRecyclerViewAdapter adapter;
+    MovieViewModel movieViewModel;
 
     public MovieFragment() {
     }
@@ -41,6 +46,21 @@ public class MovieFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        //Carga las peliculas
+        movieViewModel = ViewModelProviders.of(getActivity())
+                .get(MovieViewModel.class);
+
+        loadMovies();
+    }
+
+    private void loadMovies() {
+        movieViewModel.getPopularMovies().observe(getActivity(), new Observer<Resource<List<MovieEntity>>>() {
+            @Override
+            public void onChanged(Resource<List<MovieEntity>> listResource) {
+                movieEntityList = listResource.data;
+                adapter.setData(movieEntityList);
+            }
+        });
     }
 
     @Override
